@@ -8,7 +8,7 @@
 
 //============================================================================
 // Name        : List.cpp
-// Author      :
+// Author      :Bahman Sadeghi
 // Version     :
 // Copyright   : Your copyright notice
 // Description : Hello World in C++, Ansi-style
@@ -67,4 +67,83 @@ void List::insertLast(int data)
     	last = last->next;
     }
     size++;
+}
+
+void List::removeFirst()
+{
+    if (size==0){
+        cout << "removeFirst: List is empty. No data to remove." << endl;
+    } else if (size == 1) {
+        delete first;
+        first = last = NULL;
+        size = 0;
+    } else {
+        Nodeptr temp = first; //store pointer to first so we don't lose access to it
+        first = first->next; //advance the pointer
+        delete temp; //free the memory for the original first node
+        size--;
+    }
+}
+
+void List::removeLast()
+{
+    if (size == 0){
+        cout << "removeLast: List is empty. No data to remove." << endl;
+    } else if (size==1) {
+    	delete first;
+    	first=last=NULL;
+    	size=0;
+    } else {
+
+        Nodeptr temp = first;
+
+        while (temp->next != last) {
+
+            temp = temp->next; //advance the pointer
+        }
+        delete last; //free the memory for the original last node
+
+        last = temp;
+
+        last->next = NULL; //so last->next is not pointing at freed memory
+
+        size--;
+    }
+}
+
+bool List::isEmpty()
+{
+	return size==0;
+}
+
+int List::getSize()
+{
+    return size;
+}
+
+int List::getFirst()
+{
+    return first->data;
+
+}
+
+int List::getLast()
+{
+    return last->data;
+
+}
+
+int List::getIterator()
+{
+	return cursor->data;
+}
+
+void List::advanceIterator()
+{
+	cursor = cursor->next;
+}
+
+bool List::offEnd()
+{
+	return cursor==NULL;
 }

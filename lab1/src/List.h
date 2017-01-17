@@ -2,7 +2,7 @@
  * List.h
  *
  *  Created on: Jan 15, 2017
- *      Author: bahman
+ *      Author: bahman sadeghi
  */
 
 #ifndef LIST_H_
@@ -11,7 +11,7 @@
 #include <cstddef> //for NULL
 #include <stdio.h>
 
-typedef struct Node* Nodeptr;
+//typedef struct Node* Nodeptr;
 
 
 class List
@@ -25,8 +25,7 @@ class List
                 Node(int data): data(data), next(NULL){}
              };
 
-             typedef struct Node* Nodeptr;
-
+             typedef Node* Nodeptr;
              Nodeptr first;
              Nodeptr last;
              Nodeptr cursor;
@@ -48,7 +47,7 @@ class List
 
 
         int getFirst();
-        //Returns the first elemenet in the list
+        //Returns the first element in the list
         //Precondition: The list should not be NULL
 
 
@@ -93,8 +92,13 @@ class List
         //Prints to the console the value of each element in the list sequentially
         //and separated by a blank space
         //Prints nothing if the list is empty
+
+        int getIterator();
+        void advanceIterator();
+        bool offEnd();
+
+
+
 };
-
-
 
 #endif /* LIST_H_ */
