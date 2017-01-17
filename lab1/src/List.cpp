@@ -32,6 +32,16 @@ List::~List()
     }
 }
 
+void List::printList()
+{
+    Nodeptr temp = first; //create a temporary iterator
+    while (temp != NULL) {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
 void List::insertFirst(int data)
 {
     if (first == NULL) {
@@ -46,12 +56,15 @@ void List::insertFirst(int data)
     size++;
 }
 
-void List::printList()
+void List::insertLast(int data)
 {
-    Nodeptr temp = first; //create a temporary iterator
-    while (temp != NULL) {
-        cout << temp->data << " ";
-        temp = temp->next;
+    if (first == NULL) {
+        first = new Node(data);
+        last = first;
     }
-    cout << endl;
+    else {
+    	last->next = new Node(data);
+    	last = last->next;
+    }
+    size++;
 }

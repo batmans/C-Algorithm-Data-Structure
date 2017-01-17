@@ -33,5 +33,18 @@ int main() {
 
     cout << "Should print out 10 9 8 7 6 5 4 3 2 1 0 and then move to a new line: \n";
     L1.printList();
+    // Add 11 to the end of the list
+    L1.insertFirst(11);
+    cout<< "Should print 11 10 9 8 7 6 5 4 3 2 1 0 as if add 11 to the beginning of the list:\n";
+    L1.printList();
+    cout<<"Testing when insertlast when list is not empty , add 12 to the end of L1:\n";
+    L1.insertLast(12);
+    cout <<"It should print: 11 10 9 8 7 6 5 4 3 2 1 0 12 :\n ";
+    L1.printList();
+    cout<<"Testing when insertlast when list is  empty , add 15 to the empty list L2:\n";
+    cout <<"It should print: 15 :\n ";
+    L2.insertLast(15);
+    L2.printList();
+
     return 0;
 }
