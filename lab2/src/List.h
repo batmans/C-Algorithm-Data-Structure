@@ -10,11 +10,11 @@
 
 #include <cstddef> //for NULL
 #include <stdio.h>
+#include <assert.h>
 
-//typedef struct Node* Nodeptr;
+typedef struct Node* Nodeptr;
 
 template <class listdata> //list stores generic listdata, not any specific C++ type
-
 class List
 {
     private:
@@ -31,7 +31,7 @@ class List
              typedef Node* Nodeptr;
              Nodeptr first;
              Nodeptr last;
-             Nodeptr cursor;
+             Nodeptr iterator;
              int size;
     public:
 
@@ -104,26 +104,49 @@ class List
 
 };
 
-#endif /* LIST_H_ */
 
-#include <cstddef>
-#include <iostream>
-#include<stdlib.h>
 
-using namespace std;
 
 template <class listdata>
-List<listdata>::List(): first(NULL), last(NULL), cursor(NULL), size(0) {}
+List<listdata>::List(): first(NULL), last(NULL), iterator(NULL), size(0) {}
 
 template <class listdata>
 List<listdata>::~List()
 {
-    cursor = first;
+    iterator = first;
     Nodeptr temp;
-    while(cursor != NULL) {
-        temp = cursor->next;
-        delete cursor;
-        cursor = temp;
+    while(iterator != NULL) {
+        temp = iterator->next;
+        delete iterator;
+        iterator = temp;
+    }
+}
+
+template <class listdata>
+List<listdata>::List(const List &list): size(list.size)
+{
+    if(list.first == NULL) //If the original list is empty, make an empty list for this list
+    {
+        first = last = iterator = NULL;
+    }
+    else
+    {
+        first = new Node(list.first->data); //calling Node constructor
+        Nodeptr temp = list.first; //set a temporary node pointer to point at the first of the original list
+        iterator = first; //set iterator to point to first node of the new list
+
+        while(temp->next != NULL)
+        {
+
+            temp = temp->next; //advance up to the next node in the original list
+            iterator->next = new Node(temp->data); //using node constructor to create a new node with copy of data
+            iterator = iterator->next; //advance to this new node
+
+        }
+
+        last = iterator; //Why do I need this line of code?
+        iterator = NULL;
+
     }
 }
 
@@ -142,7 +165,7 @@ template <class listdata>
 void List<listdata>::insertFirst(listdata data)
 {
     if (first == NULL) {
-        first = new Node(list.first->data);
+        first = new Node(data);
         last = first;
     }
     else {
@@ -161,6 +184,7 @@ void List<listdata>::insertLast(listdata data)
         last = first;
     }
     else {
+
     	last->next = new Node(data);
     	last = last->next;
     }
@@ -226,6 +250,7 @@ int List<listdata>::getSize()
 template <class listdata>
 listdata List<listdata>::getFirst()
 {
+	assert(!isEmpty());
     return first->data;
 
 }
@@ -233,6 +258,7 @@ listdata List<listdata>::getFirst()
 template <class listdata>
 listdata List<listdata>::getLast()
 {
+	assert(!isEmpty());
     return last->data;
 
 }
@@ -240,20 +266,41 @@ listdata List<listdata>::getLast()
 template <class listdata>
 listdata List<listdata>::getIterator()
 {
-	return cursor->data;
+	assert(!isEmpty());
+	return iterator->data;
 }
 
 template <class listdata>
 void List<listdata>::advanceIterator()
 {
-	cursor = cursor->next;
+	assert(!isEmpty());
+	iterator = iterator->next;
 }
 
 template <class listdata>
 bool List<listdata>::offEnd()
 {
-	return cursor==NULL;
+	assert(!isEmpty());
+	return iterator==NULL;
 }
+/*
+pre : size != 0 and pre : iterator != NULL
+template <class listdata>
+void list<listdata>::insertIterator(listdata data)
+{
+	assert(size!=0);
+	assert(iterator=NULL);
+	if (iterator == last){
+		insertLast(data);
+	}
+	else {
+		Nodeptr N = new Node(data);
+		n ->next =iterator->next;
+		interator->next = N;
+		size++;
+	}
 
-
+}
+*/
+#endif /* LIST_H_ */
 
