@@ -15,7 +15,9 @@
 
 
 
-
+#include <cstddef> //for NULL
+#include <stdio.h>
+#include <assert.h>
 #include <iostream>
 #include "List.h"
 
@@ -75,7 +77,7 @@ int main() {
     L2.removeLast();
 
     cout<<"Add 125 as an element to the L2 so it would shows that list L2 has one element:\n";
-    L2.insertFirst(125);
+    L2.insertFirst("hello");
     L2.printList();
     cout<<"Now delete last element from the list only has one element and it shows that list will be empty:\n";
     L2.removeLast();

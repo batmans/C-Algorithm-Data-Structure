@@ -11,8 +11,11 @@
 #include <cstddef> //for NULL
 #include <stdio.h>
 #include <assert.h>
+#include <iostream>
 
-typedef struct Node* Nodeptr;
+
+//typedef struct Node* Nodeptr;
+
 
 template <class listdata> //list stores generic listdata, not any specific C++ type
 class List
@@ -24,7 +27,8 @@ class List
                 Node* next;
 
                 Node(): next(NULL){}
-                Node(listdata data): next(NULL), data(data){}
+                Node(listdata data): next(NULL), data(data){};
+
 
              };
 
@@ -36,6 +40,7 @@ class List
     public:
 
         /**Constructors and Destructors*/
+        List(const List &list);
 
         List();
         //Default constructor; initializes and empty list
@@ -105,7 +110,9 @@ class List
 };
 
 
-
+#include <assert.h>
+#include<iostream>
+using namespace std;
 
 template <class listdata>
 List<listdata>::List(): first(NULL), last(NULL), iterator(NULL), size(0) {}
@@ -124,6 +131,7 @@ List<listdata>::~List()
 
 template <class listdata>
 List<listdata>::List(const List &list): size(list.size)
+
 {
     if(list.first == NULL) //If the original list is empty, make an empty list for this list
     {
@@ -184,8 +192,8 @@ void List<listdata>::insertLast(listdata data)
         last = first;
     }
     else {
-
-    	last->next = new Node(data);
+        Nodeptr N = new Node(data);
+    	last->next = N;
     	last = last->next;
     }
     size++;
