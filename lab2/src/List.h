@@ -25,9 +25,10 @@ class List
              {
             	listdata data;
                 Node* next;
+                Node* previous;
 
-                Node(): next(NULL){}
-                Node(listdata data): next(NULL), data(data){};
+                Node(): next(NULL),previous(NULL){}
+                Node(listdata data): next(NULL),previous(NULL), data(data){};
 
 
              };
@@ -100,18 +101,19 @@ class List
         //Prints to the console the value of each element in the list sequentially
         //and separated by a blank space
         //Prints nothing if the list is empty
-
+        listdata startIterator();
+        listdata removeIterator();
         listdata getIterator();
         void advanceIterator();
         bool offEnd();
-
+        bool operator==(const List& list);
 
 
 };
 
 
-#include <assert.h>
-#include<iostream>
+//#include <assert.h>
+//#include<iostream>
 using namespace std;
 
 template <class listdata>
@@ -172,13 +174,14 @@ void List<listdata>::printList()
 template <class listdata>
 void List<listdata>::insertFirst(listdata data)
 {
-    if (first == NULL) {
-        first = new Node(data);
-        last = first;
+    if (size==0) {
+    	Nodeptr N= new Node(data);
+        first = last =N;
     }
     else {
         Nodeptr N = new Node(data);
         N->next = first;
+        first->previous = N;
         first = N;
     }
     size++;
@@ -188,13 +191,14 @@ template <class listdata>
 void List<listdata>::insertLast(listdata data)
 {
     if (first == NULL) {
-        first = new Node(data);
-        last = first;
+        Nodeptr N = new Node(data);
+        last = first=N;
     }
     else {
         Nodeptr N = new Node(data);
+        N->previous = last;
     	last->next = N;
-    	last = last->next;
+    	last =last->next;
     }
     size++;
 }
@@ -272,6 +276,20 @@ listdata List<listdata>::getLast()
 }
 
 template <class listdata>
+listdata List<listdata>::startIterator()
+{
+	//assert(!isEmpty());
+	//return iterator->data;
+}
+
+template <class listdata>
+listdata List<listdata>::removeIterator()
+{
+	//assert(!isEmpty());
+	//return iterator->data;
+}
+
+template <class listdata>
 listdata List<listdata>::getIterator()
 {
 	assert(!isEmpty());
@@ -288,8 +306,26 @@ void List<listdata>::advanceIterator()
 template <class listdata>
 bool List<listdata>::offEnd()
 {
+
 	assert(!isEmpty());
 	return iterator==NULL;
+}
+
+template <class listdata>
+bool List<listdata>::operator==(const List& list)
+{
+    if(size != list.size)
+        return false;
+    Nodeptr temp1 = first;
+    Nodeptr temp2 = list.first;
+    while(temp1 != NULL)
+    {
+        if(temp1->data != temp2->data)
+            return false;
+        temp1 = temp1->next;
+        temp2 = temp2->next;
+    }
+    return true;
 }
 /*
 pre : size != 0 and pre : iterator != NULL
