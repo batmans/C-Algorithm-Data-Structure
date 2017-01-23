@@ -28,12 +28,12 @@ class List
                 Node* previous;
 
                 Node(): next(NULL),previous(NULL){}
-                Node(listdata data): next(NULL),previous(NULL), data(data){};
+                Node(listdata data):data(data),next(NULL),previous(NULL){}
 
 
              };
 
-             typedef Node* Nodeptr;
+             typedef struct Node* Nodeptr;
              Nodeptr first;
              Nodeptr last;
              Nodeptr iterator;
@@ -41,7 +41,6 @@ class List
     public:
 
         /**Constructors and Destructors*/
-        List(const List &list);
 
         List();
         //Default constructor; initializes and empty list
@@ -51,6 +50,9 @@ class List
         //Destructor. Frees memory allocated to the list
         //Postcondition: Free dynamically allocated memory
 
+        List(const List &list);
+        //copy Constructor: Initializing list to have the same elements as another list
+        //Postcondition: make new list that is a copy of given list.
 
         /**Accessors*/
 
@@ -71,6 +73,12 @@ class List
         int getSize();
         //Returns the size of the list
 
+        bool offEnd();
+        //Determines if the iterator is off the end of the list (i.e. whether cursor is NULL)
+
+        listdata getIterator();
+        //Returns the element pointed to by the iterator, Data not pointer
+        //Precondition: cursor is not null.
 
         /**Manipulation Procedures*/
 
@@ -101,12 +109,30 @@ class List
         //Prints to the console the value of each element in the list sequentially
         //and separated by a blank space
         //Prints nothing if the list is empty
+
         listdata startIterator();
+        //Moves the iterator to point to the first element in the list
+        //If the list is empty, the iterator remains NULL
+        //Postcondition: cursor points to first element of list if any
+        //or remains NULL otherwise.
+
         listdata removeIterator();
-        listdata getIterator();
+        //Removes the element after the element pointed at by the iterator
+        //Precondition: if iterator is not null.
+        //Postcondition: element after iterator is removed from list.
+
         void advanceIterator();
-        bool offEnd();
+        // moves the iterator up by one node
+        //Precondition: if iterator is not null.
+
+        listdata insertIterartor(listdata data);
+        //Inserts a new element into the list in the position after the iterator
+        //Precondition: if iterator is not null.
+        //Postcondition: data is inserted after iterator.
+
         bool operator==(const List& list);
+        //Compares two lists for equality.
+
 
 
 };
@@ -219,7 +245,7 @@ void List<listdata>::removeFirst()
     }
 }
 
-
+//Need to modify to be simple
 template <class listdata>
 void List<listdata>::removeLast()
 {
@@ -275,18 +301,53 @@ listdata List<listdata>::getLast()
 
 }
 
+//check this function if it is ok ?
 template <class listdata>
 listdata List<listdata>::startIterator()
 {
-	//assert(!isEmpty());
-	//return iterator->data;
+	assert(!isEmpty());
+	iterator->next =first;
 }
 
+//check this function and its concept with instructor
 template <class listdata>
 listdata List<listdata>::removeIterator()
 {
-	//assert(!isEmpty());
-	//return iterator->data;
+	assert(!isEmpty());
+	assert(iterator=NULL);
+	if (iterator == last)
+		 	 {
+				removeLast(data);
+		 	 }
+			else
+			{
+				iterator->previous = iterator->next->next;
+				iterator->next = iterator->previous->previous;
+				iterator=NULL;
+			}
+			size--;
+
+}
+
+template <class listdata>
+listdata List<listdata>::insertIterartor(listdata data)
+{
+
+	assert(size!=0);
+	assert(iterator=NULL);
+	if (iterator == last)
+	 	 {
+			insertLast(data);
+	 	 }
+		else
+		{
+			Nodeptr N = new Node(data);
+			N->next =iterator->next;
+			iterator->next = N;
+			N->previous = iterator;
+			iterator->next->previous = N;
+		}
+		size++;
 }
 
 template <class listdata>
