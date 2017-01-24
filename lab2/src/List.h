@@ -110,13 +110,13 @@ class List
         //and separated by a blank space
         //Prints nothing if the list is empty
 
-        listdata startIterator();
+        void startIterator();
         //Moves the iterator to point to the first element in the list
         //If the list is empty, the iterator remains NULL
-        //Postcondition: cursor points to first element of list if any
+        //Postcondition: iterator points to first element of list if any
         //or remains NULL otherwise.
 
-        listdata removeIterator();
+        void removeIterator();
         //Removes the element after the element pointed at by the iterator
         //Precondition: if iterator is not null.
         //Postcondition: element after iterator is removed from list.
@@ -125,7 +125,7 @@ class List
         // moves the iterator up by one node
         //Precondition: if iterator is not null.
 
-        listdata insertIterartor(listdata data);
+        void insertIterator(listdata data);
         //Inserts a new element into the list in the position after the iterator
         //Precondition: if iterator is not null.
         //Postcondition: data is inserted after iterator.
@@ -138,8 +138,7 @@ class List
 };
 
 
-//#include <assert.h>
-//#include<iostream>
+
 using namespace std;
 
 template <class listdata>
@@ -245,7 +244,7 @@ void List<listdata>::removeFirst()
     }
 }
 
-//Need to modify to be simple
+//Need to modify to be simple , What about while loop?
 template <class listdata>
 void List<listdata>::removeLast()
 {
@@ -257,19 +256,11 @@ void List<listdata>::removeLast()
     	size=0;
     } else {
 
-        Nodeptr temp = first;
-
-        while (temp->next != last) {
-
-            temp = temp->next; //advance the pointer
-        }
-        delete last; //free the memory for the original last node
-
-        last = temp;
-
-        last->next = NULL; //so last->next is not pointing at freed memory
-
-        size--;
+        Nodeptr temp = last;
+        last = last->previous;
+        delete temp;
+        last->next=NULL;//so last->next is not pointing at freed memory
+       size--;
     }
 }
 
@@ -301,44 +292,50 @@ listdata List<listdata>::getLast()
 
 }
 
-//check this function if it is ok ?
 template <class listdata>
-listdata List<listdata>::startIterator()
+void List<listdata>::startIterator()
 {
 	assert(!isEmpty());
-	iterator->next =first;
+	iterator =first;
 }
 
-//check this function and its concept with instructor
 template <class listdata>
-listdata List<listdata>::removeIterator()
+void List<listdata>::removeIterator()
 {
 	assert(!isEmpty());
 	assert(iterator=NULL);
 	if (iterator == last)
-		 	 {
-				removeLast(data);
-		 	 }
-			else
-			{
-				iterator->previous = iterator->next->next;
-				iterator->next = iterator->previous->previous;
-				iterator=NULL;
-			}
-			size--;
+	{
+		removeLast();
+	}
+	else if(iterator==first){
+		removeFirst();
+	}
+	else
+	{
+		iterator->next->previous = iterator->previous;
+		iterator->previous->next = iterator->next;
+		size--;
+	}
+	iterator=NULL;
+
 
 }
 
 template <class listdata>
-listdata List<listdata>::insertIterartor(listdata data)
+
+void List<listdata>::insertIterator(listdata data)
 {
 
 	assert(size!=0);
-	assert(iterator=NULL);
+	assert(iterator==NULL);
 	if (iterator == last)
 	 	 {
 			insertLast(data);
 	 	 }
+	else if(iterator==first){
+		insertFirst(data);
+	}
 		else
 		{
 			Nodeptr N = new Node(data);
