@@ -8,10 +8,15 @@
 #ifndef LIST_H_
 #define LIST_H_
 
+
+
+#include <string>
 #include <cstddef> //for NULL
 #include <stdio.h>
 #include <assert.h>
 #include <iostream>
+#include "List.h"
+
 
 
 //typedef struct Node* Nodeptr;
@@ -132,8 +137,6 @@ class List
 
         bool operator==(const List& list);
         //Compares two lists for equality.
-
-
 
 };
 
@@ -295,7 +298,7 @@ listdata List<listdata>::getLast()
 template <class listdata>
 void List<listdata>::startIterator()
 {
-	assert(!isEmpty());
+	//assert(isEmpty());
 	iterator =first;
 }
 
@@ -303,23 +306,25 @@ template <class listdata>
 void List<listdata>::removeIterator()
 {
 	assert(!isEmpty());
-	assert(iterator=NULL);
-	if (iterator == last)
+	assert(iterator!=NULL);
+
+	if (iterator==first)
 	{
-		removeLast();
-	}
-	else if(iterator==first){
 		removeFirst();
+	}
+	else if( iterator == last){
+
+		removeLast();
 	}
 	else
 	{
-		iterator->next->previous = iterator->previous;
+        //Nodeptr temp = NULL;
 		iterator->previous->next = iterator->next;
+		iterator->next->previous = iterator->previous;
+		delete iterator;
+		iterator = NULL;
 		size--;
 	}
-	iterator=NULL;
-
-
 }
 
 template <class listdata>
@@ -328,36 +333,33 @@ void List<listdata>::insertIterator(listdata data)
 {
 
 	assert(size!=0);
-	assert(iterator==NULL);
+	assert(iterator!=NULL);
 	if (iterator == last)
 	 	 {
 			insertLast(data);
 	 	 }
-	else if(iterator==first){
-		insertFirst(data);
-	}
-		else
+	else
 		{
 			Nodeptr N = new Node(data);
 			N->next =iterator->next;
 			iterator->next = N;
 			N->previous = iterator;
 			iterator->next->previous = N;
+			size++;
 		}
-		size++;
 }
 
 template <class listdata>
 listdata List<listdata>::getIterator()
 {
-	assert(!isEmpty());
+	assert(isEmpty());
 	return iterator->data;
 }
 
 template <class listdata>
 void List<listdata>::advanceIterator()
 {
-	assert(!isEmpty());
+	//assert(!isEmpty());
 	iterator = iterator->next;
 }
 

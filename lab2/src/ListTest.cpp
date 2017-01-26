@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : ListTest.cpp
-// Author      : 
+// Author      : Bahman Sadeghi
 // Version     :
 // Copyright   : Your copyright notice
 // Description : Hello World in C++, Ansi-style
@@ -111,88 +111,90 @@ int main() {
 using namespace std;
 
 int main() {
-    List<int> iList;
-    List<char> cList;
-    List<double> dList;
-    List<string> sList;
+    List<int> intList;
+    List<char> charList;
+    List<double> doubleList;
+    List<string> stringList;
 
     cout << "***The next 6 function calls will fail the assertion. The program should halt. "
              <<"After you test each one, then comment out the function call***";
-   // sList.removeLast();
-    //sList.removeFirst();
-    //sList.removeIterator();
-    //sList.getFirst();
-    //sList.getLast();
-    //sList.getIterator();
+   // stringList.removeLast();
+    //stringList.removeFirst();
+    //stringList.removeIterator();
+    //stringList.getFirst();
+    //stringList.getLast();
+    //stringList.getIterator();
 
-    iList.insertFirst(5);
-    cout << "Should print 5:\n";
-    iList.printList();
-    iList.insertLast(6);
-    cout << "Should print 5 6:\n";
-    iList.printList();
+    intList.insertFirst(55);
+    cout << "Should print 55:\n";
+    intList.printList();
+    intList.insertLast(69);
+    cout << "Should print 55 69:\n";
+    intList.printList();
     cout <<"***The next function call will fail the assertion. After you test it, "
             << "then comment out the function call***";
-   // iList.getIterator();
-   // iList.startIterator();
-    //iList.insertIterator(7);
-    cout << "Should print 5 7 6:\n"; //note these should all printList on a single line separated by spaces
-    iList.printList();
+   // intList.getIterator();
+    intList.startIterator();
+    intList.insertIterator(72);
+    cout << "Should print 55 72 69:\n"; //note these should all printList on a single line separated by spaces
+    intList.printList();
 
-    List<int> iList2(iList); //copy constructor
-    cout << "Should print 5 7 6:\n";
-    iList2.printList();
+    List<int> intList2(intList); //copy constructor
+    cout << "Should print 55 72 69:\n";
+    intList2.printList();
 
     cout << "Should print lists are equal: " << endl;
-    if (iList==iList2)
+    if (intList==intList2)
         cout << "Lists are equal" << endl;
     else
         cout << "Lists are not equal" << endl;
 
-    iList.advanceIterator();
-    iList.removeIterator();
-    cout << "Should print 5 6: \n";
-    iList.printList();
+    intList.advanceIterator();
+    intList.removeIterator();
+    cout << "Should print 55 69: \n";
+    intList.printList();
 
     cout << "Should print lists are not equal: " << endl;
-    if (iList==iList2)
+    if (intList==intList2)
         cout << "Lists are equal" << endl;
     else
         cout << "Lists are not equal" << endl;
 
-    cout << "Size of list should be 0: "<< cList.getSize() << endl;
-    cList.insertFirst('a');
-    cList.removeLast();
-    cout << "Size of list should be 0: "<< cList.getSize() << endl;
+    cout << "Size of list should be 0: "<< charList.getSize() << endl;
+    charList.insertFirst('a');
+    charList.removeLast();
+    cout << "Size of list should be 0: "<< charList.getSize() << endl;
     cout << "List should be empty. Nothing printed to screen: "<< endl;
     //Should printList nothing and move to a new line.
     //Should NOT printList an error message or any other message
-    cList.printList();
-    cList.insertLast('Z');
-    cList.startIterator();
-    cList.insertIterator('z');
-    cList.insertIterator('z');
-    cList.advanceIterator();
-    cList.insertIterator('z');
-    cList.removeIterator();
-    cout << "Should print Z z z:\n";
-    cList.printList();
-    cout << "The size of the list should be 3: " << cList.getSize() << endl;
+    charList.printList();
+    charList.insertLast('A');
+    charList.startIterator();
+    charList.insertIterator('B');
+    charList.insertIterator('C');
+    charList.advanceIterator();
+    charList.insertIterator('D');
+    cout<<"should print A C D B:\n";
+    charList.printList();
+    charList.removeIterator();
+    cout << "Should print ...:\n";
+    charList.printList();
+    cout << "The size of the list should be 3: " << charList.getSize() << endl;
 
     cout << "***Should fail the assertion as the iterator is off the end of the list. "
                 << "Comment out when finished:*** \n";
-    dList.advanceIterator();
+   // doubleList.advanceIterator();
     cout << "***Should fail the assertion as the iterator is off the end of the list. "
             << "Comment out when finished:*** \n";
-    dList.insertIterator(-8.9); //should not insert this value
+   // doubleList.insertIterator(-8.9); //should not insert this value
 
-    dList.insertLast(8.8);
-    dList.insertLast(9.9);
-    cout << "Should print 8.8 9.9:\n";
-    dList.printList();
+    doubleList.insertLast(88.8);
+    doubleList.insertLast(98.9);
+    cout << "Should print 88.8 98.9:\n";
+    doubleList.printList();
 
     cout << "Should print iterator is off the end of the List:\n";
-    if(dList.offEnd())
+    if(doubleList.offEnd())
     {
         cout <<"Iterator is off end\n";
     }
@@ -200,17 +202,17 @@ int main() {
     {
         cout << "Iterator is not off end\n";
     }
-    dList.startIterator();
-    dList.advanceIterator();
-    cout << "Should print 9.9: ";
-    cout << dList.getIterator() << endl;
-    dList.advanceIterator();
+    doubleList.startIterator();
+    doubleList.advanceIterator();
+    cout << "Should print 98.9: ";
+   // cout << doubleList.getIterator() << endl;
+    doubleList.advanceIterator();
     cout << "***Should fail the assertion as the iterator is off the end of the list. "
                 << "Comment out when finished:*** \n";
-    cout << dList.getIterator() << endl;
-    dList.removeLast();
-    cout << "Should print 8.8:\n";
-    dList.printList();
+   // cout << doubleList.getIterator() << endl;
+    doubleList.removeLast();
+    cout << "Should print 88.8:\n";
+    doubleList.printList();
 }
 
 
