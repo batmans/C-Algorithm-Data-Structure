@@ -1,0 +1,128 @@
+/*
+ * Queue.cpp
+ *
+ *  Created on: Feb 5, 2017
+ *      Author: bahman
+ */
+
+#include <iostream>
+#include "Queue.h"
+#include<assert.h>
+using namespace std;
+
+Queue::Queue():front(NULL),end(NULL),size(0){}
+
+
+Queue::Queue(const Queue &queue):size(queue.size)
+{
+
+        if(queue.front == NULL)
+        {
+            end = front = NULL;
+        }
+       else
+        {
+            front = new Node;
+            front->data = queue.front->data;
+            NodePtr temp;
+            temp = queue.front;
+            NodePtr qtemp = front; //create temporary iterator
+
+            while(temp->next != NULL)
+            {
+
+                qtemp->next = new Node;
+                qtemp = qtemp->next;
+                temp = temp->next;
+                qtemp->data = temp->data;
+
+            }
+
+            end = qtemp;
+        }
+
+}
+
+Queue::~Queue()
+{
+    NodePtr temp = front;
+    NodePtr temp2 = front;
+    while (temp != NULL)
+    {
+        temp = temp->next;
+        delete temp2;
+        temp2 = temp;
+    }
+}
+
+void Queue::dequeue()
+{
+    assert(front==NULL);
+    NodePtr temp = front->next;
+    delete front;
+    if(temp != NULL)
+        front = temp;
+    else
+        front = end = NULL;
+    size--;
+}
+
+void Queue::enqueue(string data)
+{
+    if(front == NULL){
+        front = end = new Node(data);
+    }
+    else if(size == 1){
+        front->next = new Node(data);
+        end = front->next;
+    }
+    else{
+        end->next = new Node;
+        end = end->next;
+        end->data = data;
+    }
+    size++;
+}
+
+bool Queue::operator==(const Queue &queue)
+		{
+		    if(size != queue.size)
+		        return false;
+		    NodePtr cursor = front;
+		    NodePtr cursor2 = queue.front;
+		    while(cursor != NULL && cursor2 != NULL){
+		        if(cursor->data != cursor2->data)
+		            return false;
+		        cursor = cursor->next;
+		        cursor2 = cursor2->next;
+		    }
+		    return true;
+		}
+
+string Queue::get_front()
+{
+   return front->data;
+}
+
+int Queue::get_size()
+	{
+		return size;
+	}
+
+
+bool Queue::is_empty(){
+    return size == 0;
+}
+
+void Queue::print()
+{
+    NodePtr temp;
+    temp = front;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+}
+
+

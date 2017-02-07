@@ -1,0 +1,55 @@
+/*
+ * StackTest.cpp
+ *
+ *  Created on: Feb 6, 2017
+ *      Author: bahman
+ */
+
+
+#include "Stack.h"
+#include <iostream>
+#include <string>
+#include <cstdlib>
+using namespace std;
+
+int main()
+{
+		//create a default Stack with default constructor
+		Stack S1;
+	    //Testing Is empty for Queue with empty queue
+	    cout<<"Testing is_empty function when is empty, Should print : S is empty"<<endl;
+	    if(S1.is_empty())
+	    {
+	    	cout<<"Stack is empty"<<endl;
+	    }
+	    else
+	    {
+	    	cout<<"Stack is not empty"<<endl;
+	    }
+
+	       cout<<"Testing Stack function when S1 has no element , First scenario: should add I to the Stack, should print : I "<<endl;
+	       S1.push("I");
+	       S1.print();
+
+	       cout<<"Testing Stack function when S1 has one element , Second scenario: should add learn to the Stack, should print : learn I "<<endl;
+	       S1.push("learn");
+	       S1.print();
+
+	       S1.pop();
+	       cout<<"Testing pop function when S1 is not empty: should print : I"<<endl;
+	       S1.print();
+
+	       cout<<"Testing is_empty function when is not empty, Should print : Stack is not empty"<<endl;
+	              if(S1.is_empty())
+	              {
+	              	cout<<"Stack is empty"<<endl;
+	              }
+	              else
+	              {
+	              	cout<<"Stack is not empty"<<endl;
+	              }
+
+
+
+}
+

@@ -1,0 +1,127 @@
+/*
+ * QueueTest.cpp
+ *
+ *  Created on: Feb 5, 2017
+ *      Author: bahman
+ */
+
+#include "Queue.h"
+#include <cstdlib>
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    Queue Q1;
+
+    //Testing Is empty for Queue with empty queue
+    cout<<"Should print : Q is empty"<<endl;
+    if(Q1.is_empty())
+    {
+    	cout<<"Q is empty"<<endl;
+    }
+    else
+    {
+    	cout<<"Q is not empty"<<endl;
+    }
+    cout<<"Testing enqueue function when Q1 has no element , First scenario: should add I to the Queue, should print : I "<<endl;
+    Q1.enqueue("I");
+    Q1.print();
+
+    cout<<"Testing enqueue function when Q1 has one element , Second scenario: should add hate to the Queue, should print : I Hate "<<endl;
+    Q1.enqueue("Hate");
+    Q1.print();
+
+    cout<<"Testing enqueue function when Q1 has two element , third scenario: should add hate to the Queue, should print : I Hate War"<<endl;
+    Q1.enqueue("War");
+    Q1.print();
+
+    cout<<"Testing print function: should print : I hate War"<<endl;
+    Q1.print();
+    Q1.dequeue();
+    cout<<"Testing dequeue function: should print : Hate War"<<endl;
+    Q1.print();
+    cout<<"Testing get_size() function , should return 2 :"<<endl<< Q1.get_size()<<endl;
+/*
+    //Testing get_size() with empty list
+    cout<<"Should print 0: "<<myOriginalQ.get_size()<<endl;
+    //Testing print with empty Queue
+    cout<<"Should print nothing: ";
+    myOriginalQ.print();
+    cout<<endl;
+
+    //Testing is_empty()
+    cout<<"Should print queue is empty: ";
+    if(myOriginalQ.is_empty())
+        cout<<"Queue is empty"<<endl;
+    else
+        cout<<"Queue is not empty"<<endl;
+
+    //Testing enqueue
+    myOriginalQ.enqueue("first");
+    cout<<"Should print first: ";
+    myOriginalQ.print();
+    cout<<endl;
+
+    myOriginalQ.enqueue("second");
+    myOriginalQ.enqueue("third");
+    cout<<"Should print first second third: ";
+    myOriginalQ.print();
+    cout<<endl;
+
+    //Testing get_size() with non empty queue
+    cout<<"Should print 3: "<<myOriginalQ.get_size()<<endl;
+
+    //Testing is_empty() with non empty queue
+    cout<<"Should print queue is not empty: ";
+    if(myOriginalQ.is_empty())
+        cout<<"Queue is empty"<<endl;
+    else
+        cout<<"Queue is not empty"<<endl;
+
+
+    //Testing get_front()
+    cout<<"Should print first: "<<myOriginalQ.get_front()<<endl;
+
+    //Testing dequeue()
+    myOriginalQ.dequeue();
+    cout<<"Should print second third: ";
+    myOriginalQ.print();
+    cout<<endl;
+
+    //Testing if front did change
+    cout<<"Should print second: "<<myOriginalQ.get_front()<<endl;
+
+    Queue myQCopy(myOriginalQ);
+
+    //Testing copy constructor
+    cout<<"Should print second third: ";
+    myQCopy.print();
+    cout<<endl;
+
+    //Testing == operator with equal queues
+    cout<<"Should print queues are equal: ";
+    if(myOriginalQ == myQCopy)
+        cout<<"Queues are equal"<<endl;
+    else
+        cout<<"Queues are not equal"<<endl;
+
+    //Testing the == operator with non equal queues
+    myQCopy.enqueue("fourth");
+    cout<<"Should print queues are not equal: ";
+    if(myOriginalQ == myQCopy)
+        cout<<"Queues are equal"<<endl;
+    else
+        cout<<"Queues are not equal"<<endl;
+
+    //Testing the == operator with non equal queues with same size
+    myOriginalQ.enqueue("fifth");
+    cout<<"Should print queues are not equal: ";
+    if(myOriginalQ == myQCopy)
+        cout<<"Queues are equal"<<endl;
+    else
+        cout<<"Queues are not equal"<<endl;
+*/
+}
+
+
